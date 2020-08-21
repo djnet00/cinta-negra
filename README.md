@@ -1,2 +1,4 @@
 # cinta-negra
-Repositorio fines educativos
+Repositorio con fines educativos :D
+
+
