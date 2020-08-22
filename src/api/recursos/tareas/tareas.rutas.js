@@ -1,7 +1,7 @@
 const express = require('express')
 const tareasRutas = express.Router()
 
-const { getTareas, postTarea } = require('./tareas.controlador')
+const { getTareas, getTarea, postTarea, updateTarea, deleteTarea } = require('./tareas.controlador')
 
 let tareas = []
 
@@ -15,10 +15,15 @@ tareasRutas.get('/', async(req, res) => {
     
 })
 
-tareasRutas.get('/:id', (req, res) => {
-    const id = parseInt(req.params.id);
-    const tarea = tareas.filter(tarea => tarea.id == id)
-    res.status(200).json({response: tarea})
+tareasRutas.get('/:id', async (req, res) => {
+    const id = req.params.id;
+
+    try {
+        const tarea = await getTarea(id)
+        res.status(200).json({response: tarea})
+    } catch (error) {
+        res.status(400).json({response: 'Error'})
+    }
 })
 
 tareasRutas.post('/', async (req, res) => {
@@ -32,29 +37,26 @@ tareasRutas.post('/', async (req, res) => {
     }
 })
 
-tareasRutas.put('/:id', (req, res) => {
-    const nombre = req.body.nombre
-    const id = parseInt(req.params.id);
+tareasRutas.put('/:id', async (req, res) => {
+    const tarea = req.body
+    const id = req.params.id;
 
-    if(tareas.filter(tarea => tarea.id == id).length !== 0) {
-        tareas = tareas.filter(tarea => tarea.id !== id)
-        
-        tareas.push({id: id, nombre: nombre})
-
-        res.status(201).json({res: `TAREA ${id} EDITADA`})
-    }else{
-        res.status(404).send();
+    try {
+        const respuesta = await updateTarea(id, tarea)
+        res.status(201).json({response: respuesta})
+    } catch (error) {
+        res.status(400).json({response: 'Error al editar la tarea'})
     }
 })
 
-tareasRutas.delete('/:id', (req, res) => {
-    const id = parseInt(req.params.id);
+tareasRutas.delete('/:id', async (req, res) => {
+    const id = req.params.id;
 
-    if(tareas.filter(tarea => tarea.id == id).length !== 0) {
-        tareas = tareas.filter(tarea => tarea.id !== id)
-        res.status(204).send();
-    }else{
-        res.status(404).send();
+    try {
+        const respuesta = await deleteTarea(id)
+        res.status(204).json({response: respuesta})
+    } catch (error) {
+        res.status(400).json({response: 'Error'})
     }
 })
 
