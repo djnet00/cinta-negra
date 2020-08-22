@@ -1,7 +1,7 @@
 const { ModeloTarea } = require('./tareas.modelo')
 
 const getTareas = async () => {
-    const tareas = await ModeloTarea.find().sort({ fecha: 'asc' })
+    const tareas = await ModeloTarea.find().sort({ fecha: 'desc' })
     return tareas
 }
 
