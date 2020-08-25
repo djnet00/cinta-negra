@@ -1,7 +1,9 @@
 const { ModeloTarea } = require('./tareas.modelo')
 
 const getTareas = async () => {
-    const tareas = await ModeloTarea.find().sort({ fecha: 'desc' })
+    const tareas = await ModeloTarea.find({ is_active: true })
+        .sort({ fecha: 'desc' })
+        .exec()
     return tareas
 }
 
@@ -27,4 +29,11 @@ const deleteTarea = async ( id ) => {
     return respuesta
 }
 
-module.exports = { getTareas, getTarea, postTarea, updateTarea, deleteTarea }
+const hideTarea = async ( id, tarea ) => {
+    await ModeloTarea.findByIdAndUpdate(id, tarea)
+    const respuesta = await ModeloTarea.findById(id)
+
+    return respuesta
+}
+
+module.exports = { getTareas, getTarea, postTarea, updateTarea, deleteTarea, hideTarea }

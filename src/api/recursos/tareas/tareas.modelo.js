@@ -5,7 +5,10 @@ const tareasSchema = new Schema({
     titulo:     String,
     autor:      String,
     contenido:  String,
-    fecha:      {type: Date, default: Date.now}
+    is_active:  {type: Boolean, default: true}
+},
+{
+    timestamps: true
 })
 
 const ModeloTarea = mongoose.model('tareas', tareasSchema)

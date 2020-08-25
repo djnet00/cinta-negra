@@ -2,15 +2,17 @@ const express = require('express')
 const tareasRutas = express.Router()
 
 const { getTareas, getTarea, postTarea, updateTarea, deleteTarea } = require('./tareas.controlador')
+const { response } = require('../../utils/response')
+const { tareasValidator } = require('./tareas.middleware')
 
 let tareas = []
 
 tareasRutas.get('/', async(req, res) => {
     try {
         const tareas = await getTareas()
-        res.status(200).json({response: tareas})
+        response.success(req, res, 200, tareas)
     } catch (error) {
-        res.status(400).json({response: 'Error'})
+        response.success(req, res, 400, {response: 'Error'})
     }
     
 })
@@ -26,7 +28,7 @@ tareasRutas.get('/:id', async (req, res) => {
     }
 })
 
-tareasRutas.post('/', async (req, res) => {
+tareasRutas.post('/', [tareasValidator], async (req, res) => {
     const tarea = req.body
     
     try {
@@ -37,7 +39,7 @@ tareasRutas.post('/', async (req, res) => {
     }
 })
 
-tareasRutas.put('/:id', async (req, res) => {
+tareasRutas.put('/:id', [tareasValidator], async (req, res) => {
     const tarea = req.body
     const id = req.params.id;
 
@@ -54,7 +56,7 @@ tareasRutas.delete('/:id', async (req, res) => {
 
     try {
         const respuesta = await deleteTarea(id)
-        res.status(204).json({response: respuesta})
+        res.status(201).json({response: respuesta})
     } catch (error) {
         res.status(400).json({response: 'Error'})
     }
