@@ -6,7 +6,7 @@ const schemaUsersValidator = Joi.object({
     apellido:       Joi.string().min(2).required(),
     password:       Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')).required(),
     access_token:   [Joi.string(),Joi.number()],
-    email:          Joi.string().email().min(5).required()
+    email:          Joi.string().email().required()
 })
 
 const usersValidator = (req, res, next) => {
