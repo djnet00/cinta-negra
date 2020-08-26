@@ -1,5 +1,6 @@
 const express = require('express')
 const { tareasRutas } = require('./api/recursos/tareas/tareas.rutas')
+const { usersRutas } = require('./api/recursos/users/users.rutas')
 const { initDatabase } = require('./database')
 
 const app = express()
@@ -11,5 +12,6 @@ app.use(express.urlencoded({ extended: true })) // for parsing application/x-www
 initDatabase()
 
 app.use('/tareas', tareasRutas)
+app.use('/users', usersRutas)
 
 module.exports = { app, PORT }
