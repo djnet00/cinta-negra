@@ -38,10 +38,10 @@ const hideUser = async ( id, user ) => {
 }
 
 const getUserTareas = async ( id ) => {
-    const usuario = await UserModel.findById({_id: id, is_active: true })
-    const tareas = await ModeloTarea.find().where('_id').in(usuario.tareas).exec()
+    const usuario = await UserModel.findOne({_id: id, is_active: true }).populate('tareas')
+    // const tareas = await ModeloTarea.find().where('_id').in(usuario.tareas).exec()
    
-    return tareas
+    return usuario.tareas
 }
 
 const postUserTareas = async ( id, data ) => {
