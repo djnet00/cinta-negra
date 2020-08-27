@@ -2,8 +2,7 @@ const Joi = require('@hapi/joi')
 const { response } = require('../../utils/response')
 
 const schemaTareasValidator = Joi.object({
-    titulo:     Joi.string().min(3).max(30).required().label('El'),
-    autor:      Joi.string().min(2).required(),
+    titulo:     Joi.string().min(3).max(30).required(),
     contenido:  Joi.string().min(5).required()
 })
 

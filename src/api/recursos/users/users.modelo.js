@@ -6,6 +6,7 @@ const usersSchema = new Schema({
     apellido:       String,
     email:          {type: String, unique: true},
     password:       String,
+    tareas:         [{type: 'ObjectId', ref: 'tareas'}],
     access_token:   {type: String, unique: true},
     is_active:      {type: Boolean, default: true}
 },

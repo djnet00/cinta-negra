@@ -3,8 +3,8 @@ const Schema = mongoose.Schema
 
 const tareasSchema = new Schema({
     titulo:     String,
-    autor:      String,
     contenido:  String,
+    usuario:    {type: 'ObjectId', ref: 'usuarios'},
     is_active:  {type: Boolean, default: true}
 },
 {

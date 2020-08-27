@@ -1,4 +1,5 @@
 const { UserModel } = require('./users.modelo')
+const { ModeloTarea } = require('../tareas/tareas.modelo')
 
 const getUsers = async () => {
     const users = await UserModel.find({ is_active: true })
@@ -36,4 +37,21 @@ const hideUser = async ( id, user ) => {
     return respuesta
 }
 
-module.exports = { getUsers, getUser, postUser, updateUser, deleteUser, hideUser }
+const getUserTareas = async ( id ) => {
+    const usuario = await UserModel.findById({_id: id, is_active: true })
+    const tareas = await ModeloTarea.find().where('_id').in(usuario.tareas).exec()
+   
+    return tareas
+}
+
+const postUserTareas = async ( id, data ) => {
+    const usuario = await UserModel.findById(id)
+    const tarea = await ModeloTarea.create(data)
+
+    await usuario.tareas.push(tarea._id)
+    await usuario.save()
+
+    return tarea
+}
+
+module.exports = { getUsers, getUser, postUser, updateUser, deleteUser, hideUser, getUserTareas, postUserTareas }
