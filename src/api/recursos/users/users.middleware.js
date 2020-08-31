@@ -1,4 +1,5 @@
 const Joi = require('@hapi/joi')
+const Bcrypt = require('bcryptjs')
 const { response } = require('../../utils/response')
 
 const schemaUsersValidator = Joi.object({
@@ -24,5 +25,15 @@ const usersValidator = (req, res, next) => {
     
 }
 
-module.exports = { usersValidator }
+const hasheoPassword = (req, res, next)=>{
+    const usuario = req.body
+
+    if( usuario.password ) {
+        const passwordHasheada = Bcrypt.hashSync(usuario.password, 10)
+        usuario.password = passwordHasheada
+    }
+    next()
+}
+
+module.exports = { usersValidator, hasheoPassword }
 
