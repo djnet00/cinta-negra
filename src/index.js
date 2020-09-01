@@ -13,5 +13,6 @@ initDatabase()
 
 app.use('/tareas', tareasRutas)
 app.use('/users', usersRutas)
+app.use('/auth', require('./api/recursos/auth'))
 
 module.exports = { app, PORT }

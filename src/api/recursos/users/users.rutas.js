@@ -9,7 +9,8 @@ const {
     getUsersTareas,
     getUserTarea,
     postUserTarea,
-    updateUserTarea
+    updateUserTarea,
+    deleteUserTarea
 } = require('./users.controlador')
 const { usersValidator, hasheoPassword } = require('./users.middleware')
 const { response } = require('../../utils/response')
@@ -26,7 +27,7 @@ usersRutas.get('/:idUser/tareas',getUsersTareas)
 usersRutas.get('/:idUser/tareas/:idTarea', getUserTarea)
 usersRutas.post('/:idUser/tareas', postUserTarea)
 usersRutas.put('/:idUser/tareas/:idTarea',updateUserTarea)
-//usersRutas.delete('/:idUser/tareas/:idTarea',updateUserTarea)
+usersRutas.delete('/:idUser/tareas/:idTarea',deleteUserTarea)
 usersRutas.delete('/:idUser/tareas/',(req, res)=>{
 })
 
