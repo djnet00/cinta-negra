@@ -4,6 +4,7 @@ const { respuesta } = require('../../utilidades/respuesta')
 const schemaValidadorTareas = Joi.object({
     titulo: Joi.string().min(3).required(),
     autor: Joi.string().min(2).required(),
+    usuario: Joi.string().min(2),
     contenido: Joi.string().min(5).required()
 })
 
